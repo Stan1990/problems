@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdblib.h>
+#include <stdlib.h>
 
 #include "global.h"
 
@@ -14,7 +14,7 @@
 #define MASK 0x1f	// 31
 
 // 1. 置位用 '|' 操作; 清位用 '&~' 操作; 测位用 '&' 操作
-// 2. m%n 运算，当 n=2^x(幂) 的时候, m%n = m&(n-1) 
+// 2. m % n 运算，当 n = 2^x(幂) 的时候, m % n = m & (n-1) 
 
 struct bitmap {
 	int len;
@@ -41,7 +41,7 @@ bm_create(int max) {
 int
 bm_set(struct bitmap *bm, int k) {
 	int n = k/32;
-	if (n > bm->len) return false;
+	if (n > bm->len) { return false; }
 	else {
 		// '=' 左边: 找到 k 在 bitmap 中对应的 bit 的所在 uint 值
 		// '=' 右边: 找到 k 所在该 int值 对应的 bit
@@ -50,19 +50,20 @@ bm_set(struct bitmap *bm, int k) {
 	}
 }
 
-void
+int
 bm_clear(struct bitmap *bm, int k) {
 	int n = k / 32;
-	if (n > bm->len) return false;
+	if (n > bm->len) { return false; }
 	else {
 		bm->map[k >> SHIFT] &= ~(1 << (k & MASK));
+		return true;
 	}
 }
 
 int
 bm_test(struct bitmap *bm, int k) {
 	int n = k / 32;
-	if (n > bm->len) return false;
+	if (n > bm->len) { return false; }
 	return bm->map[k >> SHIFT] & (1 << (k & MASK));
 }
 
@@ -77,7 +78,6 @@ bm_delete(struct bitmap *bm) {
 
 int
 main(void) {
-	unsigned int i;
 
 	return 0;
 }
