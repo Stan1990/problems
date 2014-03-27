@@ -3,20 +3,17 @@
 CC = gcc
 CFLAGS = -g -Wall -std=c99
 
-OBJS = two_sum.o
+all : twt pow triangle
+	-mv $^ bin
 
-all : twt pow
+pow : pow.c
+	${CC} $(CFLAGS) $^ -o $@
 
-pow : ${OBJS}
-	${CC} ${CFLAGS} pow.c -o pow
+twt : two_sum.c
+	${CC} $(CFLAGS) $^ -o $@
 
-twt : ${OBJS}
-	${CC} ${CFLAGS} two_sum.c -o two_sum
-
-two_sum.o : global.h two_sum.c
-	${CC} ${CFLAGS} -c two_sum.c
+triangle : dp/triangle.c
+	${CC} $(CFLAGS) $^ -o $@
 
 clean :
-	-rm -rf *.o
-	-rm -rf two_sum
-	-rm -rf pow
+	-rm -rf bin/*
